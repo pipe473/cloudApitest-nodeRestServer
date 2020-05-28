@@ -48,7 +48,6 @@ app.delete('/user', (req, res) => {
     res.json({message: 'Delete User'});
 });
 
-const port = 3000;
-app.listen(port, () => {
-  console.log(`App running on port ${port}...`);
+app.listen(process.env.PORT, () => {
+  console.log(`App running on port ${process.env.PORT}...`);
 });
