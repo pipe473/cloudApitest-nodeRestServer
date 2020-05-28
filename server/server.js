@@ -14,7 +14,12 @@ app.get('/user', (req, res) => {
 });
 
 app.post('/user', (req, res) => {
-    res.json({message: 'Post User'});
+
+    let body = req.body;
+
+    res.json({
+        persona: body
+    });
 });
 
 app.put('/user/:id', (req, res) => {
