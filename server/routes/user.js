@@ -27,6 +27,8 @@ app.post("/user", (req, res) => {
       });
     }
 
+    // userDB.password = null;
+
     res.json({
       ok: true,
       user: userDB,

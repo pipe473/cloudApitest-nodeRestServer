@@ -30,6 +30,14 @@ let userSchema = new Schema({
     }
 });
 
+userSchema.methods.toJSON = function() {
+    let usuario = this;
+    let userObject = usuario.toObject();
+    delete userObject.password;
+
+    return userObject;
+}
+
 
 userSchema.plugin( uniqueValidator, { message: '{PATH} debe de ser único'});
 
