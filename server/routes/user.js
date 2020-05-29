@@ -8,10 +8,16 @@ const User = require("../models/user");
 const app = express();
 
 app.get("/user", (req, res) => {
+
+    let desde = req.query.desde || 0;
+    desde = Number(desde);
+
+    let limite = req.query.limite || 5;
+    limite = Number(limite);
         
     User.find({})
-    .skip(5)
-    .limit(5)
+    .skip(desde)
+    .limit(limite)
     .exec( (err, users) => {
         if (err) {
             return res.status(400).json({
