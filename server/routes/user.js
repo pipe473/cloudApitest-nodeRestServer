@@ -10,6 +10,7 @@ const app = express();
 app.get("/user", (req, res) => {
         
     User.find({})
+    .limit(5)
     .exec( (err, users) => {
         if (err) {
             return res.status(400).json({
