@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
 app.get('/user', (req, res) => {
-    res.json({message: 'Get User'});
+    res.json({message: 'Get User from LOCAL_ENVIRONMENT'});
 });
 
 app.post('/user', (req, res) => {
