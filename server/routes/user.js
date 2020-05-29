@@ -27,8 +27,6 @@ app.post("/user", (req, res) => {
       });
     }
 
-    // userDB.password = null;
-
     res.json({
       ok: true,
       user: userDB,
@@ -37,11 +35,24 @@ app.post("/user", (req, res) => {
 });
 
 app.put("/user/:id", (req, res) => {
-  let id = req.params.id;
 
-  res.json({
-    id,
-  });
+  let id = req.params.id;
+  let body = req.body;
+
+  User.findByIdAndUpdate( id, body, {new: true}, (err, userDB) => {
+    if (err) {
+        return res.status(400).json({
+          ok: false,
+          err: err,
+        });
+    }      
+    
+        res.status(200).json({
+          ok: true,
+          user: userDB
+        });
+  })
+
 });
 
 app.delete("/user", (req, res) => {
