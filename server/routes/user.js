@@ -8,7 +8,22 @@ const User = require("../models/user");
 const app = express();
 
 app.get("/user", (req, res) => {
-  res.json({ message: "Get User from LOCAL_ENVIRONMENT" });
+        
+    User.find({})
+    .exec( (err, users) => {
+        if (err) {
+            return res.status(400).json({
+              ok: false,
+              err: err,
+            });
+          }
+
+          res.json({
+              ok: true,
+              users
+          });
+    });
+
 });
 
 app.post("/user", (req, res) => {
