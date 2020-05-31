@@ -15,7 +15,7 @@ app.get("/user", (req, res) => {
     let limite = req.query.limite || 5;
     limite = Number(limite);
         
-    User.find({}, 'nombre email')
+    User.find({}, 'nombre email estado')
     .skip(desde)
     .limit(limite)
     .exec( (err, users) => {
@@ -85,8 +85,26 @@ app.put("/user/:id", (req, res) => {
 
 });
 
-app.delete("/user", (req, res) => {
-  res.json({ message: "Delete User" });
+app.delete("/user/:id", function(req, res) {
+
+    let id = req.params.id;
+
+    User.findByIdAndRemove(id, (err, userDeleted) => {
+
+        if (err) {
+            return res.status(400).json({
+              ok: false,
+              err: err,
+            });
+        }; 
+
+        res.json({
+            ok: true,
+            user: userDeleted
+        });
+
+    });
+  
 });
 
 module.exports = app;
