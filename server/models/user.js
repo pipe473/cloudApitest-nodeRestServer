@@ -7,10 +7,13 @@ const uniqueValidator = require('mongoose-unique-validator');
 let Schema = mongoose.Schema;
 
 let userSchema = new Schema({
+
+   
     nombre: {
         type: String,
         required: [true, 'El nombre es obligatorio']
     },
+
     email: {
         type: String,
         unique: true,
@@ -24,9 +27,9 @@ let userSchema = new Schema({
         type: Boolean,
         default: true
     },
-    google: {
-        type: Boolean,
-        default: false
+    addres: {
+        type: Schema.ObjectId,
+        ref: 'Addres'
     }
 });
 
