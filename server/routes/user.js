@@ -39,6 +39,24 @@ app.get("/user", (req, res) => {
 
 });
 
+app.get("/user/:id", (req, res) => {
+        let ide = req.params.id;
+    User.find({_id:ide})
+    .populate('user')
+    .exec( (err, users) => {
+        if (err) {
+            return res.status(400).json({
+              ok: false,
+              err: err,
+            });
+          }
+
+          return populate;
+    });
+
+});
+
+
 app.post("/user", (req, res) => {
   let body = req.body;
 

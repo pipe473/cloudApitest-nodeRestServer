@@ -4,7 +4,7 @@ const Address = require("../models/address");
 
 const app = express();
 
-app.post("/user", (req, res) => {
+app.post("/address", (req, res) => {
     let body = req.body;
   
     let address = new Address({
@@ -15,6 +15,20 @@ app.post("/user", (req, res) => {
       zip: body.zip
       
     });
+
+    address.save((err, address) => {
+        if (err) {
+          return res.status(400).json({
+            ok: false,
+            err: err,
+          });
+        }
+    
+        res.json({
+          ok: true,
+          user: address,
+        });
+      });
     
 });
 

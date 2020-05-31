@@ -16,6 +16,8 @@ app.use(bodyParser.json());
 
 app.use( require('./routes/user'));
 
+app.use( require('./routes/address'));
+
 
 
 mongoose.connect('mongodb://localhost:27017/cloudapi', (err, res) => {
