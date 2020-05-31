@@ -23,7 +23,7 @@ let userSchema = new Schema({
         type: String,
         required: [true, 'La contraseña es obligatoria']
     },
-    address: {
+    addres: {
         type: Schema.Types.ObjectId,
         ref: 'Address'
     }

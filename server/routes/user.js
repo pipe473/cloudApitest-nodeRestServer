@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const _ = require('underscore');
 
 const User = require("../models/user");
+const Adress = require("../models/address");
 
 const app = express();
 
@@ -43,21 +44,26 @@ app.get("/user/:id", (req, res) => {
         let ide = req.params.id;
         console.log(ide);
         
-    User.find({_id:ide })
-    .populate('addres')
-    .exec( (err, populate) => {
-        if (err) {
-            return res.status(400).json({
-              ok: false,
-              err: err
-            });
-          }
-          console.log(populate);
+    User.find({_id:ide }, function (err, address){
+        Adress.populate(address, {path: "addres"}, function(err, address){
+            res.status(200).send(address);
+        });
+    });
+    // .populate('addres')
+    // .exec( (err, populate) => {
+    //     if (err) {
+    //         return res.status(400).json({
+    //           ok: false,
+    //           err: err
+    //         });
+    //       }
+        
+    //       console.log(populate);
           
 
-           return res.status(200).json({
-               data:populate});
-    });
+    //        return res.status(200).json({
+    //            populate});
+    // });
 
 });
 
