@@ -15,7 +15,7 @@ app.get("/user", (req, res) => {
     let limite = req.query.limite || 5;
     limite = Number(limite);
         
-    User.find({})
+    User.find({}, 'nombre email')
     .skip(desde)
     .limit(limite)
     .exec( (err, users) => {
@@ -26,10 +26,15 @@ app.get("/user", (req, res) => {
             });
           }
 
-          res.json({
-              ok: true,
-              users
-          });
+          User.count({}, (err, conteo) => {
+
+              res.json({
+                  ok: true,
+                  users,
+                  cuantos: conteo
+              });
+          })
+
     });
 
 });
