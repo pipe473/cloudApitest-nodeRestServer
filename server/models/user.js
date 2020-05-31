@@ -7,7 +7,6 @@ const uniqueValidator = require('mongoose-unique-validator');
 let Schema = mongoose.Schema;
 
 let userSchema = new Schema({
-
    
     nombre: {
         type: String,
@@ -22,10 +21,6 @@ let userSchema = new Schema({
     password: {
         type: String,
         required: [true, 'La contraseña es obligatoria']
-    },
-    estado: {
-        type: Boolean,
-        default: true
     },
     addres: {
         type: Schema.ObjectId,
