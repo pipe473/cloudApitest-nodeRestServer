@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 
-let addresSchema = new Schema({
+let addressSchema = new Schema({
     
     street: {
         type: String
@@ -23,4 +23,4 @@ let addresSchema = new Schema({
 });
 
 
-module.exports = mongoose.model( 'Address', addresSchema );
+module.exports = mongoose.model( 'Address', addressSchema );

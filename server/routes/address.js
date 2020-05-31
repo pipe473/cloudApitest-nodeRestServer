@@ -26,7 +26,7 @@ app.post("/address", (req, res) => {
     
         res.json({
           ok: true,
-          user: address,
+          address: address,
         });
       });
     

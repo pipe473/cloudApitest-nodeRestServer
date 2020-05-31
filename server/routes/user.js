@@ -43,13 +43,13 @@ app.get("/user/:id", (req, res) => {
         let ide = req.params.id;
         console.log(ide);
         
-    User.find({_id:ide})
+    User.find({_id:ide })
     .populate('addres')
     .exec( (err, populate) => {
         if (err) {
             return res.status(400).json({
               ok: false,
-              err: err,
+              err: err
             });
           }
           console.log(populate);
@@ -69,6 +69,7 @@ app.post("/user", (req, res) => {
     nombre: body.nombre,
     email: body.email,
     password: bcrypt.hashSync(body.password, 10),
+    birthDate: body.birthDate,
     address: body.address
   });
 
@@ -121,6 +122,15 @@ app.delete("/user/:id", function(req, res) {
               err: err,
             });
         }; 
+
+        if (userDeleted === null) {
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: 'Usuario no encontrado'
+                }
+            });
+        }
 
         res.json({
             ok: true,
