@@ -1,73 +1,65 @@
 const express = require("express");
 
-const bcrypt = require('bcrypt');
-const _ = require('underscore');
+const bcrypt = require("bcrypt");
+const _ = require("underscore");
 
 const User = require("../models/user");
 const Adress = require("../models/address");
 
 const app = express();
 
-app.get("/user", (req, res) => {
+app.get("/users", (req, res) => {
+  let desde = req.query.desde || 0;
+  desde = Number(desde);
 
-    let desde = req.query.desde || 0;
-    desde = Number(desde);
+  let limite = req.query.limite || 5;
+  limite = Number(limite);
 
-    let limite = req.query.limite || 5;
-    limite = Number(limite);
-        
-    User.find({}, 'nombre email estado')
+  User.find({}, "nombre email estado")
     .skip(desde)
     .limit(limite)
-    .exec( (err, users) => {
-        if (err) {
-            return res.status(400).json({
-              ok: false,
-              err: err,
-            });
-          }
+    .exec((err, users) => {
+      if (err) {
+        return res.status(400).json({
+          ok: false,
+          err: err,
+        });
+      }
 
-          User.count({}, (err, conteo) => {
-
-              res.json({
-                  ok: true,
-                  users,
-                  cuantos: conteo
-              });
-          })
-
+      User.count({}, (err, conteo) => {
+        res.json({
+          ok: true,
+          users,
+          cuantos: conteo,
+        });
+      });
     });
-
 });
 
 app.get("/user/:id", (req, res) => {
-        let ide = req.params.id;
-        console.log(ide);
-        
-    User.find({_id:ide }, function (err, address){
-        Adress.populate(address, {path: "addres"}, function(err, address){
-            res.status(200).send(address);
-        });
+  let ide = req.params.id;
+  console.log(ide);
+
+  User.find({ _id: ide }, function (err, address) {
+    Adress.populate(address, { path: "address" }, function (err, address) {
+      res.status(200).send(address);
     });
-    // .populate('addres')
-    // .exec( (err, populate) => {
-    //     if (err) {
-    //         return res.status(400).json({
-    //           ok: false,
-    //           err: err
-    //         });
-    //       }
-        
-    //       console.log(populate);
-          
+  });
+  // .populate('addres')
+  // .exec( (err, populate) => {
+  //     if (err) {
+  //         return res.status(400).json({
+  //           ok: false,
+  //           err: err
+  //         });
+  //       }
 
-    //        return res.status(200).json({
-    //            populate});
-    // });
+  //       console.log(populate);
 
+  //        return res.status(200).json({
+  //            populate});
+  // });
 });
-
-
 app.post("/user", (req, res) => {
   let body = req.body;
 
@@ -76,7 +68,7 @@ app.post("/user", (req, res) => {
     email: body.email,
     password: bcrypt.hashSync(body.password, 10),
     birthDate: body.birthDate,
-    address: body.address
+    address: body.address,
   });
 
   user.save((err, userDB) => {
@@ -95,56 +87,54 @@ app.post("/user", (req, res) => {
 });
 
 app.put("/user/:id", (req, res) => {
-
   let id = req.params.id;
-  let body = _.pick(req.body, [ 'nombre', 'email', 'estado' ]);
-  
+  let body = _.pick(req.body, ["nombre", "email", "estado"]);
 
-  User.findByIdAndUpdate( id, body, { new: true, runValidators: true }, (err, userDB) => {
-    if (err) {
+  User.findByIdAndUpdate(
+    id,
+    body,
+    { new: true, runValidators: true },
+    (err, userDB) => {
+      if (err) {
         return res.status(400).json({
           ok: false,
           err: err,
         });
-    }      
-    
-        res.status(200).json({
-          ok: true,
-          user: userDB
-        });
-  })
+      }
 
+      res.status(200).json({
+        ok: true,
+        user: userDB,
+      });
+    }
+  );
 });
 
-app.delete("/user/:id", function(req, res) {
+app.delete("/user/:id", function (req, res) {
+  let id = req.params.id;
 
-    let id = req.params.id;
+  User.findByIdAndRemove(id, (err, userDeleted) => {
+    if (err) {
+      return res.status(400).json({
+        ok: false,
+        err: err,
+      });
+    }
 
-    User.findByIdAndRemove(id, (err, userDeleted) => {
+    if (userDeleted === null) {
+      return res.status(400).json({
+        ok: false,
+        err: {
+          message: "Usuario no encontrado",
+        },
+      });
+    }
 
-        if (err) {
-            return res.status(400).json({
-              ok: false,
-              err: err,
-            });
-        }; 
-
-        if (userDeleted === null) {
-            return res.status(400).json({
-                ok: false,
-                err: {
-                    message: 'Usuario no encontrado'
-                }
-            });
-        }
-
-        res.json({
-            ok: true,
-            user: userDeleted
-        });
-
+    res.json({
+      ok: true,
+      user: userDeleted,
     });
-  
+  });
 });
 
 module.exports = app;
