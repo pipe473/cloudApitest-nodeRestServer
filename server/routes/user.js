@@ -41,17 +41,22 @@ app.get("/user", (req, res) => {
 
 app.get("/user/:id", (req, res) => {
         let ide = req.params.id;
+        console.log(ide);
+        
     User.find({_id:ide})
-    .populate('user')
-    .exec( (err, users) => {
+    .populate('addres')
+    .exec( (err, populate) => {
         if (err) {
             return res.status(400).json({
               ok: false,
               err: err,
             });
           }
+          console.log(populate);
+          
 
-          return populate;
+           return res.status(200).json({
+               data:populate});
     });
 
 });
@@ -64,6 +69,7 @@ app.post("/user", (req, res) => {
     nombre: body.nombre,
     email: body.email,
     password: bcrypt.hashSync(body.password, 10),
+    address: body.address
   });
 
   user.save((err, userDB) => {
