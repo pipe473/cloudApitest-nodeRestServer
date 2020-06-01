@@ -50,7 +50,7 @@ app.get("/user/:id", (req, res) => {
   //   });
   // });
   User.findById({_id:ide })
-  .populate('addres')
+  .populate('address')
   .exec( (err, populate) => {
         if (err) {
               return res.status(400).json({
