@@ -40,8 +40,8 @@ app.get("/user/:id", (req, res) => {
   let ide = req.params.id;
   console.log(ide);
 
-  User.find({ _id: ide }, function (err, address) {
-    Adress.populate(address, { path: "addres" }, function (err, address) {
+  User.find({ }, function (err, address) {
+    User.populate(address, { path: "user" }, function (err, address) {
       res.status(200).send(address);
     });
   });
@@ -106,9 +106,9 @@ app.put("/user/:id", (req, res) => {
         ok: true,
         user: userDB,
       });
-    }
-  );
+    });
 });
+
 
 app.delete("/user/:id", function (req, res) {
   let id = req.params.id;
