@@ -14,7 +14,6 @@ app.post("/address", (req, res) => {
     country: body.country,
     zip: body.zip,
   });
-
   address.save((err, address) => {
     if (err) {
       return res.status(400).json({
@@ -28,6 +27,7 @@ app.post("/address", (req, res) => {
       address: address,
     });
   });
+  
 });
 
 module.exports = app;

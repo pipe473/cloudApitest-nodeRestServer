@@ -15,7 +15,7 @@ app.get("/users", (req, res) => {
   let limite = req.query.limite || 5;
   limite = Number(limite);
 
-  User.find({}, "nombre email estado")
+  User.find({}, "nombre email birthDate")
     .skip(desde)
     .limit(limite)
     .exec((err, users) => {
@@ -41,7 +41,7 @@ app.get("/user/:id", (req, res) => {
   console.log(ide);
 
   User.find({ _id: ide }, function (err, address) {
-    Adress.populate(address, { path: "address" }, function (err, address) {
+    Adress.populate(address, { path: "addres" }, function (err, address) {
       res.status(200).send(address);
     });
   });
@@ -69,7 +69,7 @@ app.post("/user", (req, res) => {
     password: bcrypt.hashSync(body.password, 10),
     birthDate: body.birthDate,
     address: body.address,
-  });
+  }); 
 
   user.save((err, userDB) => {
     if (err) {
@@ -88,7 +88,7 @@ app.post("/user", (req, res) => {
 
 app.put("/user/:id", (req, res) => {
   let id = req.params.id;
-  let body = _.pick(req.body, ["nombre", "email", "estado"]);
+  let body = _.pick(req.body, ["nombre", "email", "birthDate"]);
 
   User.findByIdAndUpdate(
     id,

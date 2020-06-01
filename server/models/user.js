@@ -6,20 +6,20 @@ let Schema = mongoose.Schema;
 let userSchema = new Schema({
   nombre: {
     type: String,
-    required: [true, "El nombre es obligatorio"],
+    required: [true, "El nombre es obligatorio"]
   },
 
   email: {
     type: String,
     unique: true,
-    required: [true, "El correo es necesario"],
+    required: [true, "El correo es necesario"]
   },
   birthDate: {
-    type: Date,
+    type: Date
   },
   password: {
     type: String,
-    required: [true, "La contraseña es obligatoria"],
+    required: [true, "La contraseña es obligatoria"]
   },
   addres: {
     type: Schema.Types.ObjectId,
