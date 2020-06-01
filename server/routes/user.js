@@ -40,7 +40,7 @@ app.get("/user/:id", (req, res) => {
   let ide = req.params.id;
   console.log(ide);
 
-  User.findById({ _id:ide }, function (err, address) {
+  Adress.findById({ _id:ide }, function (err, address) {
     User.populate(address, { path: "user" }, function (err, address) {
       res.status(200).send(address);
     });
