@@ -20,7 +20,9 @@ app.use( require('./routes/address'));
 
 
 
-mongoose.connect('mongodb://localhost:27017/cloudapi', (err, res) => {
+mongoose.connect('mongodb://localhost:27017/cloudapi',
+            { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true },
+            (err, res) => {
 
     if (err)  throw err;
 
