@@ -19,8 +19,7 @@ let urlDB;
 if (process.env.NODE_ENV === "dev") {
   urlDB = "mongodb://localhost:27017/cloudapi";
 } else {
-  urlDB =
-    "mongodb+srv://pipe473:GfdRF5drx9mdmuE1@cluster0-rnpty.mongodb.net/Cloudappi";
+  urlDB = process.env.MONGO_URI;
 }
 process.env.URLDB = urlDB;
 
