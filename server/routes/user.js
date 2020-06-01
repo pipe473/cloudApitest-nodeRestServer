@@ -49,7 +49,7 @@ app.get("/user/:id", (req, res) => {
       
   //   });
   // });
-  User.findById({_id:ide })
+  User.findOne({_id:ide })
   .populate('address')
   .exec( (err, populate) => {
         if (err) {
