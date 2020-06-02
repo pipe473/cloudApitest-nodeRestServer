@@ -6,13 +6,14 @@ let chaiHttp = require("chai-http");
 const expect = require("chai").expect;
 const should = require('should');
 
+const bcrypt = require("bcrypt");
+
 chai.use(chaiHttp);
 const url = "http://localhost:3000";
 
-// describe("Insert a name ", () => {
 
 /**
- * Test the GET route
+ * Test the GET users route
  */
 
  describe("GET /users", () => {
@@ -20,16 +21,23 @@ const url = "http://localhost:3000";
         chai.request(url)
             .get("/users")
             .end((err, response) => {
-                // response.should.have.status(200);
+                expect(response.body.users).to.have.a('array');
                 expect(response).to.have.status(200);
-                // expect(response.body.users).should.be.a('array');
-                // response.should.exist(res.body);
-                // response.body.should.be.a('array');
-                // response.body.length.should.be.eq();
              done();
             });
      });
  });
+
+ describe("GET with limit", () => {
+    it("It should Return two users", (done) => {
+       chai.request(url)
+           .get("/users?limite=2&desde=0")
+           .end((err, response) => {
+               expect(response.body.users.length).to.be.equal(2);
+            done();
+           });
+    });
+});
 
 
 /**
@@ -37,24 +45,44 @@ const url = "http://localhost:3000";
  */
 
 
+describe("POST", () => {
+  it("should insert a unique user name", (done) => {
+    chai.request(url)
+      .post("/user")
+      .send({
+        nombre: "Felipe",
+        email: "pipe473@gmail.com",
+        password: bcrypt.hashSync('password', 10),
+        address: "5ed53f5ba5245600171acd2d",
+      })
+      .end(function (err, res) {
+        console.log(res.body);
+        expect(res).to.have.status(201);
+        done();
+      });
+  });
+});
 
-//   it("should insert a user name", (done) => {
-//     chai
-//       .request(url)
-//       .post("/user")
-//       .send({
-//         nombre: "Felipe",
-//         email: "pipe473@gmail.com",
-//         password: 123456,
-//         address: "5ed53f5ba5245600171acd2d",
-//       })
-//       .end(function (err, res) {
-//         console.log(res.body);
-//         expect(res).to.have.status(200);
-//         done();
-//       });
-//   });
-// });
+/**
+ * Test the DELETE route
+ */
 
-// http://localhost:3000
+describe("DELETE", () => {
+    it("should delete a user", (done) => {
+      chai.request(url)
+        .delete("/user/5ed665a47d0495cd6e3ce600")
+        .send({
+          nombre: "Felipe",
+          email: "pipe473@gmail.com",
+          password: bcrypt.hashSync('password', 10),
+          address: "5ed53f5ba5245600171acd2d",
+        })
+        .end(function (err, res) {
+          console.log(res.body);
+          expect(res).to.have.status(201);
+          done();
+        });
+    });
+  });
+
 

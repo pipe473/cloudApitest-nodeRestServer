@@ -84,7 +84,7 @@ app.post("/user", (req, res) => {
       });
     }
     
-    res.json({
+    res.status(201).json({
       ok: true,
       user: userDB,
     });
@@ -134,7 +134,7 @@ app.delete("/user/:id", function (req, res) {
       });
     }
 
-    res.json({
+    res.status(201).json({
       ok: true,
       user: userDeleted,
     });
