@@ -39,7 +39,7 @@ app.get("/users", (req, res) => {
 
 app.get("/user/:id", (req, res) => {
   let ide = req.params.id;
-  console.log(ide);
+  // console.log(ide);
   
   // Adress.findById({ _id:ide }, function (err, address) {
   //   // console.log(err);      
