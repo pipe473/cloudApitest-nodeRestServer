@@ -8,7 +8,6 @@ const Information = require("../models/information");
 
 const app = express();
 
-
 // GET METHOD TO FIND ALL USERS CREATED
 
 app.get("/users", (req, res) => {
@@ -39,14 +38,13 @@ app.get("/users", (req, res) => {
     });
 });
 
-
 // GET METHOD TO FIND A USER BY ID
 
 app.get("/user/:id", (req, res) => {
   let ide = req.params.id;
-  User.find({ _id:ide })
+  User.find({ _id: ide })
     .populate("information")
-    .exec( async(err, user) => {
+    .exec(async (err, user) => {
       if (err) {
         return res.status(400).json({
           ok: false,
@@ -56,7 +54,6 @@ app.get("/user/:id", (req, res) => {
 
       let populate = await user;
       console.log(populate);
-
 
       return res.status(200).json({
         user: populate,
@@ -89,7 +86,6 @@ app.post("/user", (req, res) => {
   });
 });
 
-
 // PUT METHOD TO UPDATE USERS BY ID
 
 app.put("/user/:id", (req, res) => {
@@ -115,7 +111,6 @@ app.put("/user/:id", (req, res) => {
     }
   );
 });
-
 
 // DELETE METHOD TO REMOVE USERS BY ID
 
