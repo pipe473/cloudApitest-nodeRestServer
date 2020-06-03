@@ -17,6 +17,8 @@ app.use(require("./routes/user"));
 
 app.use(require("./routes/address"));
 
+app.use(require("./routes/information"));
+
 mongoose.connect(
   process.env.URLDB,
   { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true },

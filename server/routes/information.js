@@ -14,7 +14,7 @@ app.post("/information", (req, res) => {
     country: body.country,
     zip: body.zip,
   });
-  information.save((err, information) => {
+  information.save((err, infoUser) => {
     if (err) {
       return res.status(400).json({
         ok: false,
@@ -22,9 +22,9 @@ app.post("/information", (req, res) => {
       });
     }
 
-    res.json({
+    res.status(201).json({
       ok: true,
-      information: information,
+      information: infoUser,
     });
   });
   

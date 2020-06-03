@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 
-let Schema = mongoose.Schema;
-// const Address = mongoose.model("Address");
+const Schema = mongoose.Schema;
 
 
 let userSchema = new Schema({
@@ -23,7 +22,7 @@ let userSchema = new Schema({
     type: String,
     required: [true, "La contraseña es obligatoria"]
   },
-  information: { type: Schema.Types.ObjectId, ref: "Information" }
+  information: { type: Schema.Types.ObjectId, ref: 'Information' },
 });
 
 userSchema.methods.toJSON = function () {
