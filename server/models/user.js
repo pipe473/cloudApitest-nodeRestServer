@@ -23,7 +23,7 @@ let userSchema = new Schema({
     type: String,
     required: [true, "La contraseña es obligatoria"]
   },
-  addres: { type: Schema.Types.ObjectId, ref: "Address" }
+  information: { type: Schema.Types.ObjectId, ref: "Information" }
 });
 
 userSchema.methods.toJSON = function () {

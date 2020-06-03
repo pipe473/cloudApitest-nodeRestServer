@@ -4,9 +4,12 @@ const bcrypt = require("bcrypt");
 const _ = require("underscore");
 
 const User = require("../models/user");
-const Adress = require("../models/address");
+const Information = require("../models/information");
 
 const app = express();
+
+
+// GET METHOD TO FIND ALL USERS CREATED
 
 app.get("/users", (req, res) => {
   let desde = req.query.desde || 0;
@@ -36,10 +39,13 @@ app.get("/users", (req, res) => {
     });
 });
 
+
+// GET METHOD TO FIND A USER BY ID
+
 app.get("/user/:id", (req, res) => {
   let ide = req.params.id;
   User.findOne({ _id: ide })
-    .populate("address")
+    .populate("information")
     .exec((err, populate) => {
       if (err) {
         return res.status(400).json({
@@ -80,6 +86,10 @@ app.post("/user", (req, res) => {
     });
   });
 });
+
+
+// PUT METHOD TO UPDATE USERS BY ID
+
 app.put("/user/:id", (req, res) => {
   let id = req.params.id;
   let body = _.pick(req.body, ["nombre", "email", "birthDate"]);
@@ -103,6 +113,9 @@ app.put("/user/:id", (req, res) => {
     }
   );
 });
+
+
+// DELETE METHOD TO REMOVE USERS BY ID
 
 app.delete("/user/:id", function (req, res) {
   let id = req.params.id;
