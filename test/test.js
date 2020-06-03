@@ -46,7 +46,7 @@ const url = "http://localhost:3000";
 
 
 describe("POST", () => {
-  it("should insert a unique user name", (done) => {
+  it("should insert a unique id for every user", (done) => {
     chai.request(url)
       .post("/user")
       .send({
@@ -68,7 +68,7 @@ describe("POST", () => {
  */
 
 describe("DELETE", () => {
-    it("should delete a user", (done) => {
+    it("should delete a user created", (done) => {
       chai.request(url)
         .delete("/user/5ed665a47d0495cd6e3ce600")
         .send({
